@@ -17,7 +17,7 @@ namespace Maui_Sample.ViewModels
 
         public partial class TermsViewModel :ObservableObject
         {
-                public TERSTTYPE tersValue;
+                private TERSTTYPE tersValue;
                 [ObservableProperty]
                 private string titleText;
 
@@ -57,6 +57,14 @@ namespace Maui_Sample.ViewModels
                         this.IsSubPage = true;
                         return this;
                 }
+
+                public TERSTTYPE GetTersType() => this.tersValue; 
+                public void CheckStateChange(bool state) =>this.IsChecked = state;
+
+                public bool GetEssentialTerm() => this.IsSubPage == true;
+
+                public bool IsCheckTrue() => this.IsChecked == true;
+
                 [RelayCommand]
                 private void Area()
                 {
@@ -107,22 +115,16 @@ namespace Maui_Sample.ViewModels
 
                                 if (value.type == TERSTTYPE.ALL)
                                 {
-                                        foreach(var termsVieModel in this.TermsViewModels.Where(x=>x.tersValue != TERSTTYPE.ALL))
+                                        foreach(var termsVieModel in this.TermsViewModels.Where(x=>x.GetTersType() != TERSTTYPE.ALL))
                                         {
-                                                termsVieModel.IsChecked = value.state;
+                                                termsVieModel.CheckStateChange(value.state);
                                         }
                                         return;
                                 }
 
-                                NextButtonEnable = this.TermsViewModels.Where(x => x.IsSubPage == true)
-                                                                                            .All(x => x.IsChecked == true);
+                                NextButtonEnable = this.TermsViewModels.Where(x => x.GetEssentialTerm() == true)
+                                                                                            .All(x => x.IsCheckTrue());
                         });
-                }
-             
-
-                [RelayCommand]
-                private void CheckAllArea()
-                {
                 }
         }
 }
