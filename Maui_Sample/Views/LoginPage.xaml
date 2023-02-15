@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="Maui_Sample.Views.LoginPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:behaviors="clr-namespace:Maui_Sample.Behaviors"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    xmlns:vm="clr-namespace:Maui_Sample.ViewModels"
+    Padding="18,90,18,0"
+    x:DataType="{x:Type vm:LoginPageModel}">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <toolkit:IsStringNullOrEmptyConverter x:Key="IsStringNullOrEmptyConverter" />
+        </ResourceDictionary>
+        <Style x:Key="LabelButton" TargetType="{x:Type Button}">
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="FontAttributes" Value="Bold" />
+            <Setter Property="TextColor" Value="Black" />
+            <Setter Property="VerticalOptions" Value="Center" />
+            <Setter Property="HorizontalOptions" Value="Center" />
+        </Style>
+    </ContentPage.Resources>
+    <ContentPage.Behaviors>
+        <toolkit:StatusBarBehavior StatusBarColor="Black" StatusBarStyle="Default" />
+    </ContentPage.Behaviors>
+    <Grid RowDefinitions="auto, 67,auto">
+        <Image
+            Grid.Row="0"
+            Source="dotnet_bot"
+            WidthRequest="120" />
+        <VerticalStackLayout Grid.Row="2" Padding="0,0">
+            <Entry
+                x:Name="en_email"
+                Keyboard="Email"
+                Placeholder="아이디(이메일)를 입력하세요"
+                ReturnType="Next"
+                Text="{Binding EmailAddress}">
+                <Entry.Behaviors>
+                    <behaviors:EmailValidationBehavior />
+                </Entry.Behaviors>
+            </Entry>
+            <Entry
+                x:Name="en_password"
+                IsPassword="True"
+                Placeholder="비밀번호를 입력하세요"
+                ReturnType="Done"
+                Text="{Binding Password}" />
+            <HorizontalStackLayout
+                Margin="-10,0,0,0"
+                HorizontalOptions="Start"
+                VerticalOptions="Center">
+                <CheckBox Color="#A701FF" />
+                <Label
+                    FontAttributes="Bold"
+                    FontSize="14"
+                    Text="자동 로그인"
+                    VerticalOptions="Center" />
+            </HorizontalStackLayout>
+            <Label
+                Margin="0,0,0,14"
+                FontSize="10"
+                Text="아이디(이메일)를 입력하세요"
+                TextColor="#A700FF" />
+            <Button
+                Margin="0,40,0,0"
+                FontSize="15"
+                IsEnabled="{Binding LoginbuttonEnable}"
+                Style="{StaticResource CustomButton}"
+                Text="로그인" />
+            <Button
+                Margin="0,20"
+                Clicked="RegisterCommand"
+                FontSize="14"
+                Style="{StaticResource LabelButton}"
+                Text="회원가입"
+                VerticalOptions="Center" />
+            <Grid ColumnDefinitions="*,1,*">
+                <Button
+                    Grid.Column="0"
+                    Style="{StaticResource LabelButton}"
+                    Text="아이디 찾기" />
+                <Line
+                    Grid.Column="1"
+                    Stroke="black"
+                    StrokeThickness="0.93"
+                    X1="0"
+                    X2="0"
+                    Y1="10"
+                    Y2="27" />
+                <Button
+                    Grid.Column="2"
+                    Style="{StaticResource LabelButton}"
+                    Text="비밀번호 찾기" />
+            </Grid>
+        </VerticalStackLayout>
+    </Grid>
+</ContentPage>

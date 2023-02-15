@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="Maui_Sample.Views.RegisterPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:vm="clr-namespace:Maui_Sample.ViewModels"
+    x:DataType="{x:Type vm:RegisterPageModel}"
+    NavigationPage.HasBackButton="True">
+    <Grid Margin="20,0,20,10">
+        <VerticalStackLayout Spacing="50">
+            <Label
+                FontAttributes="Bold"
+                FontSize="20"
+                HorizontalOptions="Start"
+                Text="이용 약관에 &#10;동의해주세요."
+                VerticalOptions="Center" />
+            <CollectionView ItemsSource="{Binding TermsViewModels}">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid
+                            Margin="0,0,0,5"
+                            x:DataType="{x:Type vm:TermsViewModel}"
+                            ColumnDefinitions="auto, *, auto">
+                            <Grid.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding AreaCommand}" />
+                            </Grid.GestureRecognizers>
+                            <CheckBox
+                                Grid.Column="0"
+                                IsChecked="{Binding IsChecked}"
+                                Color="#A701FF" />
+                            <Label
+                                Grid.Column="1"
+                                FontAttributes="Bold"
+                                FontSize="13"
+                                Text="{Binding TitleText}"
+                                VerticalTextAlignment="Center" />
+                            <Path
+                                Grid.Column="2"
+                                Data="M 96.536 490 403.019 244.996 96.536 0 86.981 11.962 378.496 244.996 86.981 478.038 Z"
+                                Fill="Black"
+                                HeightRequest="20"
+                                IsVisible="{Binding IsSubPage}"
+                                WidthRequest="20" />
+                        </Grid>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </VerticalStackLayout>
+        <Button
+            IsEnabled="{Binding NextButtonEnable}"
+            Style="{StaticResource CustomButton}"
+            Text="휴대폰 본인인증"
+            VerticalOptions="End" />
+    </Grid>
+
+</ContentPage>
